@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<link rel="stylesheet" href="lib/onsen/css/onsenui.css">
+		<link rel="stylesheet" href="lib/onsen/css/onsen-css-components-blue-basic-theme.css">
+		<link rel="stylesheet" href="css/login.css">
+
+		<script src="lib/onsen/js/angular/angular.js"></script>
+		<script src="lib/onsen/js/onsenui.js"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+		<script>
+			ons.bootstrap();
+		</script>
+	</head>
+	<body>
+		<ons-navigator title="Navigator" var="myNavigator">
+		<ons-page>
+		<ons-toolbar>
+		<div class="center">Simple Navigation</div>
+		</ons-toolbar>
+		<div style="text-align: center">
+			<br>
+			<ons-button modifier="light" onclick="myNavigator.pushPage('search_map.html', { animation : 'slide' } )">
+			Search Map
+			</ons-button>
+		</div>
+		</ons-page>
+		</ons-navigator>
+	</body>
+</html>
