@@ -1,0 +1,22 @@
+#main_menu .page--full_bg__background
+{
+	background: url('../img/background.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	opacity: 0.6;
+}
+.menu
+{
+	text-align: center;
+	position: fixed;
+	width: 100%;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.menu .menu_item
+{
+	display: block;
+	width: 40%;
+	left: 30%;
+	margin: 5px;
+}

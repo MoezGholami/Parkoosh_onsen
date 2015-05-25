@@ -5,7 +5,16 @@
 
 		<link rel="stylesheet" href="lib/onsen/css/onsenui.css">
 		<link rel="stylesheet" href="lib/onsen/css/onsen-css-components-blue-basic-theme.css">
+		<link rel="stylesheet" href="css/app.css">
 
+		<script type="text/javascript">
+			var serverMapUrl="172.16.111.174:3000/map";
+			var reserveTimeInterval=
+				{
+					startd=null,
+					endd=null
+				};
+		</script>
 		<script src="lib/onsen/js/angular/angular.js"></script>
 		<script src="lib/onsen/js/onsenui.js"></script>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
@@ -16,14 +25,16 @@
 	</head>
 	<body>
 		<ons-navigator title="Navigator" var="myNavigator">
-		<ons-page>
-		<ons-toolbar>
-		<div class="center">Simple Navigation</div>
-		</ons-toolbar>
-		<div style="text-align: center">
-			<br>
-			<ons-button modifier="light" onclick="myNavigator.pushPage('search_map.html', { animation : 'slide' } )">
-			Search Map
+		<ons-page id="main_menu" modifier="full_bg">
+		<div class="menu">
+			<ons-button class="menu_item" onclick="myNavigator.pushPage('search_map.html', { animation : 'fade' } )">
+			رزرو پارکینگ
+			</ons-button>
+            		<ons-button class="menu_item" onclick="myNavigator.pushPage('plaque_save.html', { animation : 'fade' } )">
+			ذخیره پلاک
+			</ons-button>
+            		<ons-button class="menu_item" onclick="myNavigator.pushPage('about.html', { animation : 'fade' } )">
+			درباره ما
 			</ons-button>
 		</div>
 		</ons-page>
