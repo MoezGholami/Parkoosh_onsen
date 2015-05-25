@@ -1,66 +1,91 @@
 //map.js
 
+map=null;
+parkingMarker=null;
+infowindow=null;
+userMarker=null;
+userLogoWindow=null;
+
 (function() {
     var app = angular.module('myApp', ['onsen']);
   
     //Map controller
     app.controller('MapController', function($scope, $timeout){
       
-        $scope.map;
-        $scope.markers = [];
-	$scope.Parkings = [];
-        $scope.markerId = 1;
           
         //Map initialization  
-        $timeout(function(){
+        $timeout(function initialize(){
       
-            var latlng = new google.maps.LatLng(35.724, 51.386);
+            var latlng = new google.maps.LatLng(userCords.latitude, userCords.longitude);
             var myOptions = {
-                zoom: 12,
+                zoom: 15,
                 center: latlng,
 		mapTypeControl:false,
 		streetViewControl:false,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
-            $scope.map = new google.maps.Map(document.getElementById("map_canvas"), myOptions); 
+            map = new google.maps.Map(document.getElementById("map_canvas"), myOptions); 
             $scope.overlay = new google.maps.OverlayView();
             $scope.overlay.draw = function() {}; // empty function required
-            $scope.overlay.setMap($scope.map);
+            $scope.overlay.setMap(map);
             $scope.element = document.getElementById('map_canvas');
+	    $scope.initMarkers();
+	    $scope.getParkingInfo();
+	    google.maps.event.addDomListener(window, 'load', initialize);
         },100);
 
-        //Delete all Markers
-        $scope.deleteAllMarkers = function(){
-
-            if($scope.markers.length == 0){
-                return;
-            }
-
-            for (var i = 0; i < $scope.markers.length; i++) {
-
-                //Remove the marker from Map                  
-                $scope.markers[i].setMap(null);
-            }
-
-            //Remove the marker from array.
-            $scope.markers.length = 0;
-            $scope.markerId = 0;
-        };
+	$scope.initMarkers = function()
+	{
+            var parkingPos = new google.maps.LatLng(parkingCords.latitude, parkingCords.longitude);
+	    infowindow = new google.maps.InfoWindow({content:'ظرفیت ندارد.'});
+	    parkingMarker = new google.maps.Marker(
+		    {
+			title: 'ظرفیت',
+		    	map: map,
+		    	position: parkingPos,
+		    	icon: yellowDotUrl
+		    }
+		    );
+	    google.maps.event.addListener(parkingMarker, 'click', function(){infowindow.open(map, parkingMarker);});
+	    var userPos = new google.maps.LatLng(userCords.latitude, userCords.longitude);
+	    userLogoWindow = new google.maps.InfoWindow({content:'شما اینجا هستید.'});
+	    userMarker = new google.maps.Marker(
+			    {
+				title: 'مکان شما',
+		    		map: map,
+		    		position: userPos,
+		    		icon:pegmanMapLogoUrl
+			    }
+			    );
+	    google.maps.event.addListener(userMarker, 'click', function(){userLogoWindow.open(map, userMarker);});
+	}
 
         //Get Selected Map Markers
-	$scope.getParkingsInfo = function(){
+	$scope.getParkingInfo = function(){
+		if($scope.isInBound(parkingMarker.getPosition())!=true)
+		{
+			ons.notification.alert({message:'در این محدوده پارکینگی وجود ندارد'});
+		}
 		var xmlParkingList;
 		xmlParkingList=new XMLHttpRequest();
 		xmlParkingList.onreadystatechange=function()
 		{
 			if (xmlParkingList.readyState==4 && xmlParkingList.status==200)
 			{
-				$scope.deleteAllMarkers();
-				document.getElementById("myDiv").innerHTML=xmlParkingList.responseText;
+				var numberof=parseInt(xmlParkingList.responseText);
+				if(numberof==0)
+					parkingMarker.setIcon(redDotUrl);
+				else
+					parkingMarker.setIcon(greenDotUrl);
+				infowindow.content='ظرفیت: '+numberof;
 			}
 		}
-		xmlParkingList.open("GET",serverMapUrl+"?bounds="+map.getBounds().replace(/ /g,''),true);
+		xmlParkingList.open("GET",serverMapUrl+"?throwaway="+Math.random(),true);
 		xmlParkingList.send();
+	};
+	$scope.isInBound = function(MarkerPosition)
+	{
+		return map.getBounds().contains(MarkerPosition);
 	};
     });
 })();

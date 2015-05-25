@@ -9,19 +9,30 @@
 
 		<script type="text/javascript">
 			var serverMapUrl="172.16.111.174:3000/map";
+			var yellowDotUrl='img/yellow-dot.png';
+			var redDotUrl='img/red-dot.png';
+			var greenDotUrl='img/green-dot.png';
+			var pegmanMapLogoUrl='img/pegman2.png';
+			var parkingCords=
+				{
+					latitude:35.724521,
+					longitude:51.388627
+				};
+			var userCords=
+				{
+					latitude:35.726067,
+					longitude:51.387929
+				};
 			var reserveTimeInterval=
 				{
-					startd=null,
-					endd=null
+					startd:null,
+					endd:null
 				};
 		</script>
 		<script src="lib/onsen/js/angular/angular.js"></script>
 		<script src="lib/onsen/js/onsenui.js"></script>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 		<script src="js/map.js"></script>
-		<script>
-			ons.bootstrap();
-		</script>
 	</head>
 	<body>
 		<ons-navigator title="Navigator" var="myNavigator">

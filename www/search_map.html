@@ -1,4 +1,4 @@
-<ons-page>
+<ons-page ng-controller="MapController">
 <ons-toolbar>
 <div class="left"><ons-back-button>بازگشت</ons-back-button></div>
 <div class="center">جستجو در نقشه</div>
@@ -9,8 +9,8 @@
 	<ons-button modifier="light" onclick="myNavigator.popPage()">
 	Pop Page
 	</ons-button>
-	<ons-button modifier="light" onclick="myNavigator.popPage()">
-	Pop Page
+	<ons-button modifier="light" ng-click="getParkingInfo()">
+	get info
 	</ons-button>
 </div>
     <div ng-controller="MapController" id="map_canvas" style="border: solid 1px; height: 400px; width:100%;"></div>
