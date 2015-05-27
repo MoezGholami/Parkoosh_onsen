@@ -13,10 +13,35 @@
 	top: 50%;
 	transform: translateY(-50%);
 }
+
 .menu .menu_item
 {
 	display: block;
 	width: 40%;
 	left: 30%;
 	margin: 5px;
+}
+
+.search_layout
+{
+	text-align: center;
+	position: fixed;
+	width: 100%;
+}
+
+.search_layout #map_canvas
+{
+	display: block;
+	width: 98%;
+	left: 1%;
+	border: solid 1px;
+	margin:20px 0px 10px 0px;
+	height: 400px;
+}
+
+.search_layout #search_button
+{
+	display: block;
+	width: 40%;
+	left: 30%;
 }

@@ -37,18 +37,18 @@ userLogoWindow=null;
 	$scope.initMarkers = function()
 	{
             var parkingPos = new google.maps.LatLng(parkingCords.latitude, parkingCords.longitude);
-	    infowindow = new google.maps.InfoWindow({content:'ظرفیت ندارد.'});
+	    infowindow = new google.maps.InfoWindow({content:'ظرفیت: 1'});
 	    parkingMarker = new google.maps.Marker(
 		    {
 			title: 'ظرفیت',
 		    	map: map,
 		    	position: parkingPos,
-		    	icon: yellowDotUrl
+		    	icon:greenDotUrl 
 		    }
 		    );
 	    google.maps.event.addListener(parkingMarker, 'click', function(){infowindow.open(map, parkingMarker);});
 	    var userPos = new google.maps.LatLng(userCords.latitude, userCords.longitude);
-	    userLogoWindow = new google.maps.InfoWindow({content:'شما اینجا هستید.'});
+	    userLogoWindow = new google.maps.InfoWindow({content:'شما اینجا هستید'});
 	    userMarker = new google.maps.Marker(
 			    {
 				title: 'مکان شما',
@@ -64,24 +64,19 @@ userLogoWindow=null;
 	$scope.getParkingInfo = function(){
 		if($scope.isInBound(parkingMarker.getPosition())!=true)
 		{
-			ons.notification.alert({message:'در این محدوده پارکینگی وجود ندارد'});
+			ons.notification.alert({message:'ببخشید. در این محدوده پارکینگ ثبت شده ای نداریم'});
 		}
-		var xmlParkingList;
-		xmlParkingList=new XMLHttpRequest();
-		xmlParkingList.onreadystatechange=function()
-		{
-			if (xmlParkingList.readyState==4 && xmlParkingList.status==200)
-			{
-				var numberof=parseInt(xmlParkingList.responseText);
-				if(numberof==0)
+				if(numberof%2==0)
+				{
 					parkingMarker.setIcon(redDotUrl);
+					infowindow.setContent('ظرفیت: 0');
+				}
 				else
+				{
 					parkingMarker.setIcon(greenDotUrl);
-				infowindow.content='ظرفیت: '+numberof;
-			}
-		}
-		xmlParkingList.open("GET",serverMapUrl+"?throwaway="+Math.random(),true);
-		xmlParkingList.send();
+					infowindow.setContent('ظرفیت: 1');
+				}
+				numberof=(numberof+1)%2;
 	};
 	$scope.isInBound = function(MarkerPosition)
 	{

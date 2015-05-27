@@ -4,14 +4,12 @@
 <div class="center">جستجو در نقشه</div>
 </ons-toolbar>
 
-<div style="text-align: center">
-	<br />
-	<ons-button modifier="light" onclick="myNavigator.popPage()">
-	Pop Page
-	</ons-button>
-	<ons-button modifier="light" ng-click="getParkingInfo()">
-	get info
-	</ons-button>
+<div class="search_layout">
+	<div ng-controller="MapController" id="map_canvas"></div>
+	<div style="text-align: center">
+		<ons-button id="search_button" ng-click="getParkingInfo()">
+		اینجا هم بگرد
+		</ons-button>
+	</div>
 </div>
-    <div ng-controller="MapController" id="map_canvas" style="border: solid 1px; height: 400px; width:100%;"></div>
 </ons-page>
